@@ -46,7 +46,6 @@ export const SigninForm: React.FC = () => {
           label="E-mail"
           type="email"
           fullWidth
-          size="small"
           helperText={errors.email && touched.email ? errors.email : " "}
           error={!!errors.email && touched.email}
           variant="outlined"
@@ -60,7 +59,6 @@ export const SigninForm: React.FC = () => {
           label="Senha"
           type="password"
           fullWidth
-          size="small"
           helperText={
             errors.password && touched.password ? errors.password : " "
           }

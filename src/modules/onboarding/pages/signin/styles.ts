@@ -13,6 +13,9 @@ export const PresentationContainer = styled.div`
 export const PresentationContent = styled.div`
   width: 80%;
   margin-bottom: 2rem;
+  @media (max-width: 500px) {
+    margin-bottom: 5rem;
+  }
 `;
 
 export const AppSubtitle = styled.p`
@@ -57,13 +60,14 @@ export const Container = styled.div`
     flex-direction: column;
     ${PresentationContainer} {
       width: 100vw;
-      height: 25vh;
+      height: 40vh;
     }
     ${FloatIconContainer} {
       bottom: ${-(FloatIconContainerSize / 1.65)}rem;
     }
     ${ContentContainer} {
       width: 100vw;
+      height: 60vh;
     }
   }
   @media (min-width: 880px) {
