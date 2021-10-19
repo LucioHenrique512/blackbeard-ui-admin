@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface LogoProps {
-  size?: "small" | "medium" | "large" | "x-large" | "xx-large";
+  size?: "small" | "medium" | "large" | "x-large" | "xx-large" | string;
   isWhite?: boolean;
 }
 
