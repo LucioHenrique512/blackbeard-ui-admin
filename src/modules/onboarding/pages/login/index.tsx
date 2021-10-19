@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { Button, Link, TextField, Typography } from "@material-ui/core";
 import { Logo } from "../../../../components";
 import {
   Container,
@@ -6,6 +6,7 @@ import {
   Form,
   FormContainer,
   Header,
+  LinksContainer,
 } from "./styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -20,15 +21,19 @@ const validationSchema = Yup.object().shape({
 });
 
 export const Login: React.FC = () => {
-  const { values, errors, handleChange, handleBlur, handleSubmit } = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (value) => {
-      console.log(value);
-    },
-  });
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validateOnChange: false,
+      validateOnBlur: true,
+      validationSchema,
+      onSubmit: (value) => {
+        console.log(value);
+      },
+    });
 
   return (
     <Container>
@@ -37,7 +42,7 @@ export const Login: React.FC = () => {
           <Logo size="xx-large" isWhite />
         </Header>
         <FormContainer>
-          <Typography style={{ marginBottom: "1rem", fontSize: "1.5rem" }}>
+          <Typography style={{ marginBottom: "1.5rem", fontSize: "1.5rem" }}>
             Login
           </Typography>
           <Form onSubmit={handleSubmit}>
@@ -50,8 +55,10 @@ export const Login: React.FC = () => {
               type="email"
               fullWidth
               size="small"
-              helperText=" "
+              helperText={errors.email && touched.email ? errors.email : " "}
+              error={!!errors.email && touched.email}
               variant="outlined"
+              style={{ marginBottom: "1rem" }}
             />
             <TextField
               value={values.password}
@@ -62,19 +69,28 @@ export const Login: React.FC = () => {
               type="password"
               fullWidth
               size="small"
-              helperText=" "
+              helperText={
+                errors.password && touched.password ? errors.password : " "
+              }
+              error={!!errors.password && touched.password}
               variant="outlined"
+              style={{ marginBottom: "1rem" }}
             />
 
             <Button
               type="submit"
               variant="contained"
-              size="small"
+              size="large"
+              fullWidth
               color="primary"
             >
               Entrar
             </Button>
           </Form>
+          <LinksContainer>
+            <Link href="#">Esqueci minha senha</Link>
+            <Link href="#">Não tenho uma conta</Link>
+          </LinksContainer>
         </FormContainer>
       </ContentContainer>
     </Container>

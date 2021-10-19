@@ -16,7 +16,7 @@ export const Logo: React.FC<LogoProps> = ({ size = "xx-large", isWhite }) => {
 const Container = styled.h1<LogoProps>`
   font-family: "Inter", sans-serif;
   font-size: ${({ size }) => size};
-  color: ${({ theme, isWhite }) => (isWhite ? theme.white : theme.black)};
+  color: ${({ theme, isWhite }) => (isWhite ? theme.secondary : theme.black)};
   span {
     font-weight: 400;
   }

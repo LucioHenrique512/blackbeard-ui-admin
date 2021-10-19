@@ -1,8 +1,11 @@
+import { createTheme } from "@material-ui/core";
+import createPalette from "@material-ui/core/styles/createPalette";
+
 export const theme = {
   primary: "#29292D",
+  secondary: "#FFFFFF",
   background: "#F2F1F6",
   foreground: "#E5E5E9",
-  white: "#FFFFFF",
   black: "#000000",
   paddingSm: "1rem",
   paddingMd: "1.5rem",
@@ -11,3 +14,11 @@ export const theme = {
 };
 
 export type ThemeType = typeof theme;
+
+
+export const muiTheme = createTheme({
+  palette: {
+    primary: { main: theme.primary },
+    secondary: { main: theme.secondary },
+  },
+});

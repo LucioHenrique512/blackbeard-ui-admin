@@ -11,7 +11,7 @@ export const Container = styled.div`
 
 export const ContentContainer = styled.div`
   border-radius: ${({ theme }) => theme.borderRadius};
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.secondary};
   box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.1);
   width: 400px;
   overflow: hidden;
@@ -32,3 +32,11 @@ export const FormContainer = styled.div`
 `;
 
 export const Form = styled.form``;
+
+export const LinksContainer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+margin-top: 1.5rem;
+
+`
