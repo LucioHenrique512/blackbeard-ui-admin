@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: ${({ theme }) => theme.black};
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-`;
-
 export const PresentationContainer = styled.div`
   width: 40vw;
   height: 100vh;
@@ -22,6 +12,7 @@ export const PresentationContainer = styled.div`
 
 export const PresentationContent = styled.div`
   width: 80%;
+  margin-bottom: 2rem;
 `;
 
 export const AppSubtitle = styled.p`
@@ -42,7 +33,6 @@ export const FloatIconContainer = styled.div`
   display: flex;
   border: solid 0.5rem ${({ theme }) => theme.secondary};
   position: absolute;
-  right: ${-(FloatIconContainerSize / 1.65)}rem;
 `;
 
 export const ContentContainer = styled.div`
@@ -53,9 +43,32 @@ export const ContentContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 500px) {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0rem;
+`;
+
+export const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: ${({ theme }) => theme.black};
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 880px) {
+    flex-direction: column;
+    ${PresentationContainer} {
+      width: 100vw;
+      height: 25vh;
+    }
+    ${FloatIconContainer} {
+      bottom: ${-(FloatIconContainerSize / 1.65)}rem;
+    }
+    ${ContentContainer} {
+      width: 100vw;
+    }
+  }
+  @media (min-width: 880px) {
+    ${FloatIconContainer} {
+      right: ${-(FloatIconContainerSize / 1.65)}rem;
+    }
   }
 `;

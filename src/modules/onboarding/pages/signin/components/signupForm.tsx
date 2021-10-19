@@ -6,10 +6,12 @@ import * as yup from "yup";
 import { OnboardRoutes } from "../../../onboardRoutes";
 
 const validationSchema = yup.object().shape({
-  email: yup.string()
+  email: yup
+    .string()
     .email("Favor insira um email válido")
     .required("Favor informe o email da sua conta."),
-  password: yup.string()
+  password: yup
+    .string()
     .required("Favor insira a senha")
     .min(4, "A senha deve conter no minimo 4 characteres."),
 });
