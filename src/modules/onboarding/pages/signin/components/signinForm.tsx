@@ -1,9 +1,11 @@
 import { Button, TextField, Typography } from "@material-ui/core";
 import { useFormik } from "formik";
+import { useCallback } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import * as yup from "yup";
 import { OnboardRoutes } from "../../../onboardRoutes";
+import { isStrongPassword } from "../../../utils/password";
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -13,7 +15,13 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .required("Favor insira a senha")
-    .min(4, "A senha deve conter no minimo 4 characteres."),
+    .test(
+      "passwordForce",
+      "A senha deve conter pelo menos 8 caracteres, uma letra e um número.",
+      (value) => {
+        return isStrongPassword(value);
+      }
+    ),
 });
 
 export const SigninForm: React.FC = () => {
@@ -23,13 +31,18 @@ export const SigninForm: React.FC = () => {
         email: "",
         password: "",
       },
-      validateOnChange: false,
+      validateOnChange: true,
       validateOnBlur: true,
       validationSchema,
       onSubmit: (value) => {
+        //todo - send value as payload to authentication endpoint
         console.log(value);
       },
     });
+  const hasErrors = useCallback(
+    () => Object.keys(errors).length === 0,
+    [errors]
+  );
   const { push } = useHistory();
 
   return (
@@ -73,6 +86,7 @@ export const SigninForm: React.FC = () => {
           size="large"
           fullWidth
           color="primary"
+          disabled={!hasErrors()}
         >
           Entrar
         </Button>
@@ -102,7 +116,7 @@ export const LinksContainer = styled.div`
 `;
 
 export const Link = styled.a`
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.primary};
   text-decoration: none;
   cursor: pointer;

@@ -1,5 +1,5 @@
 import { Logo } from "../../../../components";
-import { SigninForm } from "./components/signupForm";
+import { SigninForm } from "./components/signinForm";
 import {
   Container,
   ContentContainer,
