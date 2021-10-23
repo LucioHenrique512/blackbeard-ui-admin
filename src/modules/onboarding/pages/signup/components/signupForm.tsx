@@ -4,16 +4,26 @@ import { useCallback } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import * as yup from "yup";
+import { maskedInputPatterns } from "../../../../../utils/text";
 import { OnboardRoutes } from "../../../onboardRoutes";
 import { isStrongPassword } from "../../../utils/password";
+import MaskedInput from "react-text-mask";
 
 const validationSchema = yup.object().shape({
-  fullName: yup.string().required("Favor informe o seu nome."),
+  fullName: yup
+    .string()
+    .required("Favor informe o seu nome.")
+    .test("fullName", "Favor informe seu nome e sobrenome.", (value) => {
+      const valueArray = `${value}`.split(" ");
+      const validation =
+        valueArray.length > 1 && valueArray[1].split("").length > 1;
+      return validation;
+    }),
   email: yup
     .string()
     .email("Favor insira um email válido")
     .required("Favor informe o email da sua conta."),
-  phoneNumber: yup.string().min(11, "Favor informe um telefone válido."),
+  //phoneNumber: yup.string().min(11, "Favor informe um telefone válido."),
   password: yup
     .string()
     .required("Favor insira a senha")
@@ -35,23 +45,30 @@ const validationSchema = yup.object().shape({
 });
 
 export const SignupForm: React.FC = () => {
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: {
-        fullName: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        passwordConfirmation: "",
-      },
-      validateOnChange: true,
-      validateOnBlur: true,
-      validationSchema,
-      onSubmit: (value) => {
-        //todo - send value as payload to authentication endpoint
-        console.log(value);
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      fullName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      passwordConfirmation: "",
+    },
+    validateOnChange: true,
+    validateOnBlur: true,
+    validationSchema,
+    onSubmit: (value) => {
+      //todo - send value as payload to authentication endpoint
+      console.log(value);
+    },
+  });
   const hasErrors = useCallback(
     () => Object.keys(errors).length === 0,
     [errors]
@@ -94,20 +111,30 @@ export const SignupForm: React.FC = () => {
           style={{ marginBottom: "1rem" }}
         />
 
-        <TextField
+        <MaskedInput
+          mask={maskedInputPatterns.phoneNumber}
+          placeholder="Enter a phone number"
           value={values.phoneNumber}
           onChange={handleChange}
           onBlur={handleBlur}
           name="phoneNumber"
-          label="Telefone"
           type="text"
-          fullWidth
-          helperText={
-            errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : " "
-          }
-          error={!!errors.phoneNumber && touched.phoneNumber}
-          variant="outlined"
           style={{ marginBottom: "1rem" }}
+          render={(ref, props) => (
+            <TextField
+              {...props}
+              inputRef={ref}
+              label="Telefone"
+              fullWidth
+              helperText={
+                errors.phoneNumber && touched.phoneNumber
+                  ? errors.phoneNumber
+                  : " "
+              }
+              error={!!errors.phoneNumber && touched.phoneNumber}
+              variant="outlined"
+            />
+          )}
         />
 
         <TextField
